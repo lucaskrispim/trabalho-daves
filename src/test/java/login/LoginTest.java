@@ -24,35 +24,61 @@ public class LoginTest {
     }
 
     @Test
-    public void loginSucess(){
+    public void loginSucess() {
+        //Login e senha corretos
         driver.get("http://localhost:9000/login");
-        driver.manage().window().setSize(new Dimension(980,1078));
-        threadWait(2);
+        driver.manage().window().setSize(new Dimension(980, 1078));
+        threadWait(1);
         driver.findElement(By.id("username")).click();
-        threadWait(2);
+        threadWait(1);
         driver.findElement(By.id("username")).sendKeys("daves");
-        threadWait(2);
+        threadWait(1);
         driver.findElement(By.id("password")).click();
-        threadWait(2);
+        threadWait(1);
         driver.findElement(By.id("password")).sendKeys("123456");
-        threadWait(2);
-        driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div[2]/form/div[2]/div/button") ).click();
-        threadWait(2);
-        assertThat( driver.findElement(By.xpath("/html/body/div/div[2]/nav/div/div/a/span")).getText() , is("Bem Vindo, Daves Martins") );
+        threadWait(1);
+        driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div[2]/form/div[2]/div/button")).click();
+        threadWait(1);
+        assertThat(driver.findElement(By.xpath("/html/body/div/div[2]/nav/div/div/a/span")).getText(), is("Bem Vindo, Daves Martins"));
     }
 
-//    @Test
-//    public void loginNotSucess(){
-//        driver.get("http://localhost:9000/login");
-//        driver.manage().window().setSize(new Dimension(980,1078));
-//        driver.findElement(By.id("username")).click();
-//        driver.findElement(By.id("username")).sendKeys("111");
-//        driver.findElement(By.id("password")).click();
-//        driver.findElement(By.id("password")).sendKeys("112");
-//        driver.findElement(By.cssSelector(".login100-form-btn")).click();
-//
-//        assertThat( driver.findElement( By.cssSelector("p") ).getText() , is("Login ou Senha incorreta") );
-//    }
+    @Test
+    public void loginNotSucess1(){
+        //Login incorreto e senha correta
+        driver.get("http://localhost:9000/login");
+        driver.manage().window().setSize(new Dimension(980,1078));
+        threadWait(1);
+        driver.findElement(By.id("username")).click();
+        threadWait(1);
+        driver.findElement(By.id("username")).sendKeys("zezinho");
+        threadWait(1);
+        driver.findElement(By.id("password")).click();
+        threadWait(1);
+        driver.findElement(By.id("password")).sendKeys("123456");
+        threadWait(1);
+        driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div[2]/form/div[2]/div/button") ).click();
+        threadWait(1);
+        assertThat( driver.findElement(By.xpath("/html/body/div/div[2]/div/div/span")).getText() , is("Login ou senha incorreta") );
+    }
+
+    @Test
+    public void loginNotSucess2(){
+        //Login correto mas senha incorreta
+        driver.get("http://localhost:9000/login");
+        driver.manage().window().setSize(new Dimension(980,1078));
+        threadWait(1);
+        driver.findElement(By.id("username")).click();
+        threadWait(1);
+        driver.findElement(By.id("username")).sendKeys("daves");
+        threadWait(1);
+        driver.findElement(By.id("password")).click();
+        threadWait(1);
+        driver.findElement(By.id("password")).sendKeys("123");
+        threadWait(1);
+        driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div[2]/form/div[2]/div/button") ).click();
+        threadWait(1);
+        assertThat( driver.findElement(By.xpath("/html/body/div/div[2]/div/div/span")).getText() , is("Login ou senha incorreta") );
+    }
 
     @AfterEach
     public void tearDown(){
@@ -76,4 +102,3 @@ public class LoginTest {
     }
 
 }
-
