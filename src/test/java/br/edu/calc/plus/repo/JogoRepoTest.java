@@ -75,6 +75,7 @@ class JogoRepoIntegrationTest {
     @AfterEach
     void tearDown() {
         // Clean up the data after each test
+        usuarioRepo.deleteAll();
         jogoRepo.deleteAll();
     }
 

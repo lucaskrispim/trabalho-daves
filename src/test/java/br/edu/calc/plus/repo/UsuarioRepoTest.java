@@ -28,6 +28,7 @@ class UsuarioRepoIntegrationTest {
 
     @BeforeEach
     void setUp() {
+
         // Set up test data
         usuario1 = new Usuario(1,"John Doe", "johndoe","johndoe@gmail.com","1234","Rio de Janeiro", LocalDate.now());
         usuario2 = new Usuario(2,"Jane Smith", "janesmith","janesmith@gmail.com","1234","Rio de Janeiro", LocalDate.now());
