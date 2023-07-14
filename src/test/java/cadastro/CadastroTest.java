@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Date;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -71,10 +73,14 @@ public class CadastroTest {
         threadWait(1);
         driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div/div[2]/form/div[4]/div/button")).click();
         threadWait(1);
-        driver.findElement(By.xpath("/html/body/script")).click();
-        threadWait(1);
-        assertThat(driver.findElement(By.xpath("/html/body/script")).getText() , is("cadastro criado com sucesso."));
 
+        String searchMessage = "cadastro criado com sucesso.";
+        Alert alert = searchAlert(driver, searchMessage);
+        if (alert != null) {
+            assertThat( alert.getText(), is("cadastro criado com sucesso."));
+        }else{
+            assertEquals(1,2);
+        }
     }
 
     @Test
@@ -108,8 +114,6 @@ public class CadastroTest {
         driver.findElement(By.id("cpData")).sendKeys("13-03-1999");
         //threadWait(1);
         driver.findElement(By.xpath("/html/body/div/div[2]/div/main/div/div/div/div[2]/form/div[4]/div/button")).click();
-        threadWait(1);
-        driver.findElement(By.xpath("/html/body/script")).click();
         threadWait(1);
         assertThat(driver.findElement(By.xpath("/html/body/script")).getText() , is(""));
 
@@ -171,6 +175,19 @@ public class CadastroTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Alert searchAlert(WebDriver driver, String searchMessage) {
+        Alert alert = null;
+        try {
+            alert = driver.switchTo().alert();
+            if (alert.getText().equals(searchMessage)) {
+                return alert;
+            }
+        } catch (Exception e) {
+            // Alert not present
+        }
+        return null;
     }
 
 }
