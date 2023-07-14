@@ -35,7 +35,8 @@ class PartidaRepoIntegrationTest {
 
     @BeforeEach
     void setUp() {
-
+        partidaRepo.deleteAll();
+        usuarioRepo.deleteAll();
         usuario1 = new Usuario(1,"John Doe", "johndoe","johndoe@gmail.com","1234","Rio de Janeiro", LocalDate.now());
 
         usuarioRepo.save(usuario1);
